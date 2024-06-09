@@ -25,6 +25,9 @@ export default createStore({
         commit("addTodo", response.data);
       });
     },
+    updateTodo(ctx, todo) {
+      axios.put(`http://localhost:3000/todos/${todo.id}`, todo);
+    },
   },
   modules: {},
 });
