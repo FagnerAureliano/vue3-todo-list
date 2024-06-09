@@ -17,6 +17,9 @@ export default createStore({
         state.todos[index] = todo
       }
     },
+    deleteTodo(state, id) {
+      state.todos = state.todos.filter((t) => t.id !== id);
+    },
   },
   getters: {},
   actions: {
@@ -32,6 +35,12 @@ export default createStore({
     },
     updateTodo(ctx, todo) {
       axios.put(`http://localhost:3000/todos/${todo.id}`, todo);
+    },
+    deleteTodo({ commit}, {id}) {
+      axios.delete(`http://localhost:3000/todos/${id}`).then(() => {
+        commit("deleteTodo", id);
+        
+      });
     },
   },
   modules: {},

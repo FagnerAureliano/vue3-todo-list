@@ -2,10 +2,7 @@
     <div class="bg-gray-300 rounded-sm">
         <div class="flex items-center px-4 py-3 border-b border-gray-400 last:border-b-0">
             <div class="flex items-center justify-center mr-2">
-                <button
-                 :class="{ 'text-gray-400': !isCompleted, 'text-green-700': isCompleted }"
-                 @click="onCheckClick"
-                 >
+                <button :class="{ 'text-gray-400': !isCompleted, 'text-green-700': isCompleted }" @click="onCheckClick">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
@@ -20,7 +17,7 @@
             </div>
 
             <div class="ml-auto flex items-center justify-center">
-                <button class="focus:outline-none">
+                <button class="focus:outline-none" @click="removeTodo">
                     <svg class="ml-3 h-4 w-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -48,16 +45,19 @@ export default {
             isCompleted: this.todo.completed
         }
     },
-    methods: { 
-        updateTodo() { 
+    methods: {
+        updateTodo() {
             if (!this.title) {
                 return
-            } 
+            }
             this.$store.dispatch('updateTodo', {
                 id: this.todo.id,
                 title: this.title,
                 completed: this.isCompleted
             })
+        },
+        removeTodo() {
+            this.$store.dispatch('deleteTodo', this.todo)
         },
         onCheckClick() {
             this.isCompleted = !this.isCompleted
