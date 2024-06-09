@@ -11,7 +11,7 @@
 
           <TodoItens v-if="$store.state.todos.length" />
 
-          <TodoEmpty v-else/>
+          <TodoEmpty v-else />
         </template>
       </div>
     </div>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
 import TodoItens from '@/components/TodoItens.vue'
 import TodoEmpty from '@/components/TodoEmpty.vue'
 import TodoFormAdd from '@/components/TodoFormAdd.vue'
@@ -32,16 +34,17 @@ export default {
     TodoFormAdd,
     TodoSpinner,
   },
-  data() {
-    return {
-      loading: false
-    }
-  },
-  created() {
-    this.loading = true
-    this.$store.dispatch('getTodos').finally(() => {
-      this.loading = false
+  setup() {
+    const loading = ref(false);
+    const store = useStore();
+
+    loading.value = true
+    store.dispatch('getTodos').finally(() => {
+      loading.value = false
     })
+
+    return { loading };
   }
+
 }
 </script>

@@ -31,6 +31,9 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+
 
 export default {
     props: {
@@ -39,29 +42,36 @@ export default {
             default: () => ({})
         }
     },
-    data() {
-        return {
-            title: this.todo.title,
-            isCompleted: this.todo.completed
+    setup(props) {
+        const store = useStore();
+        const title = ref(props.todo.title);
+        const isCompleted = ref(props.todo.completed);
+
+        const updateTodo = () => {
+            const updatedTodo = {
+                id: props.todo.id,
+                title: title.value,
+                completed: isCompleted.value
+            };
+
+            store.dispatch('updateTodo', updatedTodo);
+        };
+
+        const removeTodo = () => {
+            store.dispatch('deleteTodo', props.todo)
         }
-    },
-    methods: {
-        updateTodo() {
-            if (!this.title) {
-                return
-            }
-            this.$store.dispatch('updateTodo', {
-                id: this.todo.id,
-                title: this.title,
-                completed: this.isCompleted
-            })
-        },
-        removeTodo() {
-            this.$store.dispatch('deleteTodo', this.todo)
-        },
-        onCheckClick() {
-            this.isCompleted = !this.isCompleted
-            this.updateTodo()
+
+        const onCheckClick = () => {
+            isCompleted.value = !isCompleted.value
+            updateTodo()
+        }
+
+        return {
+            title,
+            updateTodo,
+            removeTodo,
+            isCompleted,
+            onCheckClick,
         }
     }
 }
