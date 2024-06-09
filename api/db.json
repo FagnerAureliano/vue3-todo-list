@@ -7,17 +7,12 @@
     },
     {
       "id": "2",
-      "title": "Estudar Vue 1",
+      "title": "Estudar Vue ",
       "completed": true
     },
     {
       "id": "3",
       "title": "Estudar composition API",
-      "completed": false
-    },
-    {
-      "id": "004a",
-      "title": "eee",
       "completed": false
     }
   ]

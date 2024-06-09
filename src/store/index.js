@@ -10,7 +10,12 @@ export default createStore({
       state.todos = todos;
     },
     addTodo(state, todo) {
-      state.todos.unshift(todo);
+      const index  = state.todos.findIndex((t) => t.id === todo.id);
+      if(index === -1) {
+        state.todos.unshift(todo);
+      }else{
+        state.todos[index] = todo
+      }
     },
   },
   getters: {},
