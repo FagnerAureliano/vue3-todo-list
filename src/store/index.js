@@ -2,10 +2,14 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-  },
-  getters: {
+    todos: []
   },
   mutations: {
+    storeTodos(state, todos) {
+      state.todos = todos      
+    }
+  },
+  getters: {
   },
   actions: {
   },
