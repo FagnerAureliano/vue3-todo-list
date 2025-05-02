@@ -42,6 +42,11 @@ export default createStore({
         
       });
     },
+    findByText({ commit }, text) { 
+      axios.get(`http://localhost:3000/todos?title_like=${text}`).then((response) => {
+        commit("storeTodos", response.data);
+      });
+    },
   },
   modules: {},
 });
